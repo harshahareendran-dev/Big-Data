@@ -1,0 +1,24 @@
+------------------------------------------------------------------------------------------------------------------
+IMPORT TO HDFS
+------------------------------------------------------------------------------------------------------------------
+
+STEP 1 : Download the SQL
+wget http://media.sundog-soft.com/hadoop/movielens.sql
+
+STEP 2 : CONNECT TO MYSQL:
+mysql -u root -p
+
+STEP 3 : SQOOP IMPORT: WITH JUST ONE MAPPER, TALBE 'movies'
+sqoop import --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table movies -m 1
+
+------------------------------------------------------------------------------------------------------------------
+IMPORT TO HIVE
+------------------------------------------------------------------------------------------------------------------
+
+sqoop import --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table genres -m 1 --hive-import
+
+------------------------------------------------------------------------------------------------------------------
+EXPORT FROM HIVE
+------------------------------------------------------------------------------------------------------------------
+
+sqoop export --connect jdbc:mysql://localhost/movielens --driver com.mysql.jdbc.Driver --table employee -m 1 --export-dir /user/hive/warehouse/sep.db --input-fields-terminated-by '\0001'

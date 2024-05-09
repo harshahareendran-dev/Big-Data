@@ -1,0 +1,86 @@
+PIG HANDSON:
+
+Mode 1 : Local
+
+(base) [cloudera@quickstart ~]$ pig -x local
+log4j:WARN No appenders could be found for logger (org.apache.hadoop.util.Shell).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+2023-09-27 02:26:32,388 [main] INFO  org.apache.pig.Main - Apache Pig version 0.12.0-cdh5.13.0 (rexported) compiled Oct 04 2017, 11:09:03
+2023-09-27 02:26:32,388 [main] INFO  org.apache.pig.Main - Logging error messages to: /home/cloudera/pig_1695806792342.log
+2023-09-27 02:26:32,412 [main] INFO  org.apache.pig.impl.util.Utils - Default bootup file /home/cloudera/.pigbootup not found
+2023-09-27 02:26:32,542 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2023-09-27 02:26:32,542 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2023-09-27 02:26:32,544 [main] INFO  org.apache.pig.backend.hadoop.executionengine.HExecutionEngine - Connecting to hadoop file system at: file:///
+
+Mode 2 : Mapreduce
+
+[cloudera@quickstart ~]$ pig -x mapreduce
+log4j:WARN No appenders could be found for logger (org.apache.hadoop.util.Shell).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+2023-09-27 02:27:57,780 [main] INFO  org.apache.pig.Main - Apache Pig version 0.12.0-cdh5.13.0 (rexported) compiled Oct 04 2017, 11:09:03
+2023-09-27 02:27:57,781 [main] INFO  org.apache.pig.Main - Logging error messages to: /home/cloudera/pig_1695806877731.log
+2023-09-27 02:27:57,814 [main] INFO  org.apache.pig.impl.util.Utils - Default bootup file /home/cloudera/.pigbootup not found
+2023-09-27 02:27:58,371 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2023-09-27 02:27:58,372 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2023-09-27 02:27:58,372 [main] INFO  org.apache.pig.backend.hadoop.executionengine.HExecutionEngine - Connecting to hadoop file system at: hdfs://quickstart.cloudera:8020
+
+
+Mode 3 : Default
+
+(base) [cloudera@quickstart ~]$ pig
+log4j:WARN No appenders could be found for logger (org.apache.hadoop.util.Shell).
+log4j:WARN Please initialize the log4j system properly.
+log4j:WARN See http://logging.apache.org/log4j/1.2/faq.html#noconfig for more info.
+2023-09-27 02:28:47,786 [main] INFO  org.apache.pig.Main - Apache Pig version 0.12.0-cdh5.13.0 (rexported) compiled Oct 04 2017, 11:09:03
+2023-09-27 02:28:47,787 [main] INFO  org.apache.pig.Main - Logging error messages to: /home/cloudera/pig_1695806927747.log
+2023-09-27 02:28:47,825 [main] INFO  org.apache.pig.impl.util.Utils - Default bootup file /home/cloudera/.pigbootup not found
+2023-09-27 02:28:48,590 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - mapred.job.tracker is deprecated. Instead, use mapreduce.jobtracker.address
+2023-09-27 02:28:48,591 [main] INFO  org.apache.hadoop.conf.Configuration.deprecation - fs.default.name is deprecated. Instead, use fs.defaultFS
+2023-09-27 02:28:48,591 [main] INFO  org.apache.pig.backend.hadoop.executionengine.HExecutionEngine - Connecting to hadoop file system at: hdfs://quickstart.cloudera:8020
+
+
+-------------------------------------------------
+EXCERSICE 1:
+
+data_set = LOAD 'hdfs://quickstart.cloudera:8020/user/cloudera/harshain/dampleData.txt' USING PigStorage(',') AS (id:int,name:chararray,city:chararray);
+2   STORE data_set INTO '/user/cloudera/harshaop'
+
+;
+3   filteredData = FILTER data_set by id>2000;
+4   STORE filteredData INTO '/user/cloudera/harshaop'
+
+;
+5   STORE filteredData INTO '/user/cloudera/harshafilop'
+
+
+EXCERCISE 2:
+
+
+1234,Harsha,Hareendran,36,9790055631,Chennai
+2345,Sabin,Damodaran,38,6190055631,sydney
+3456,Syami,Shashidharan,32,8109998765,Chennai
+4567,Suhas,HAreendran,38,974562052,Chennai
+
+
+
+
+history
+
+
+6   emp_data = LOAD 'hdfs://quickstart.cloudera:8020/user/cloudera/harshain/emp_data.txt' USING PigStorage(',') AS (id:int,fname:chararray,lname:chararray,age:int,phone_no:int,city:chararray);
+7   filtered_data = FILTER emp_data by age>36;
+8   filtered_data = FILTER emp_data by age>=36;
+9   group_data = GROUP filtered_data BY city;
+
+(sydney,{(2345,Sabin,Damodaran,38,,sydney)})
+(Chennai,{(4567,Suhas,HAreendran,38,974562052,Chennai),(1234,Harsha,Hareendran,36,,Chennai)})
+
+
+EXCERCISE 3 : 
+
+
+
+
+

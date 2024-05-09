@@ -1,0 +1,43 @@
+1. Create a file in the local file system
+2. upload that file to hdfs file system
+2. we will run a mapreduce code on this file to get the wordcound example out?
+------------------------------------------------------------------------------------------------------------------
+
+
+vi MRPractice.txt
+  415  ls
+  416  vi MRPractice.txt
+  417  ls
+  418  hdfs dfs -ls
+  419  hdfs dfs -ls /
+  420  hdfs dfs put /home/cloudera/MRPractice.txt /user/cloudera/
+  421  hdfs dfs -ls /user/cloudera/
+  422  hdfs dfs -put /home/cloudera/MRPractice.txt /user/cloudera/
+  423  hdfs dfs -ls /user/cloudera/
+  424  hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-example.jar /user/cloudera/MRPratice /user/cloudera/harsha
+  425  hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar /user/cloudera/MRPratice /user/cloudera/harsha
+  426  hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount /user/cloudera/MRPratice /user/cloudera/harsha
+  427  hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount /user/cloudera/MRPratice /user/cloudera/harshaN
+  428  hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount /user/cloudera/MRPractice.txt /user/cloudera/harshaN
+  429  hdfs dfs -ls /user/cloudera
+  430  hdfs dfs -ls /user/cloudera/harshaN
+  431  hdfs dfs -cat /user/cloudera/harshaN/part-r-00000
+  432  hdfs dfs -ls /usr/lib
+  433  hdfs dfs -ls /usr/lib/
+  434  ls /usr/lib/
+  435  ls /usr/lib/hadoop-mapreduce/
+  436  ls
+  437  hdfs dfs -vi /user/cloudera/MRPractice.txt
+  438  vi MRPractice.txt
+  439  hdfs dfs -put /home/cloudera/MRPractice.txt /user/cloudera/
+  440  hdfs dfs -put /home/cloudera/MRPractice.txt /user/cloudera/AboutMR.txt
+  441  hdfs dfs -ls /user/clouera
+  442  /
+  443  hdfs dfs -ls /user/cloudera
+  444  hdfs dfs -rmdir /user/cloudera/harsha/
+  445  hdfs dfs -ls /user/cloudera
+  446  hadoop jar /usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar wordcount /user/cloudera/AboutMR.txt /user/cloudera/harsha
+  447  hdfs dfs -ls /user/cloudera
+  448  hdfs dfs -ls /user/cloudera/harsha
+  449  hdfs dfs -cat /user/cloudera/harsha/part-r-00000
+  450  history

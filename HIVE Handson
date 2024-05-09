@@ -1,0 +1,433 @@
+INTERNAL TABLE:
+----------------
+hive> create table if not exists employee(empId int, empName varchar(100), empDesgn varchar(50), emSalary float) row format delimited fields terminated by ',';
+
+hive> insert into employee values(8418,'Harsha HAreendran','VP','260000');
+Query ID = cloudera_20230929030707_bf19564d-8714-4c47-a625-fb47928155e7
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1695808816601_0011, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1695808816601_0011/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1695808816601_0011
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2023-09-29 03:08:09,022 Stage-1 map = 0%,  reduce = 0%
+2023-09-29 03:08:26,201 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.53 sec
+MapReduce Total cumulative CPU time: 2 seconds 530 msec
+Ended Job = job_1695808816601_0011
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://quickstart.cloudera:8020/user/hive/warehouse/sep.db/employee/.hive-staging_hive_2023-09-29_03-07-52_591_9193866141005571845-1/-ext-10000
+Loading data to table sep.employee
+Table sep.employee stats: [numFiles=1, numRows=1, totalSize=35, rawDataSize=34]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 2.53 sec   HDFS Read: 4743 HDFS Write: 103 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 530 msec
+OK
+Time taken: 35.245 seconds
+
+hive> select * from employee;
+OK
+8418	Harsha HAreendran	VP	260000.0
+Time taken: 0.587 seconds, Fetched: 1 row(s)
+
+hive> select count(*) from employee;
+Query ID = cloudera_20230929031313_d5871e38-2374-4d8d-8f20-6197f73c2016
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1695808816601_0012, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1695808816601_0012/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1695808816601_0012
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2023-09-29 03:14:06,107 Stage-1 map = 0%,  reduce = 0%
+2023-09-29 03:14:23,068 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.48 sec
+2023-09-29 03:14:31,706 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 3.5 sec
+MapReduce Total cumulative CPU time: 3 seconds 500 msec
+Ended Job = job_1695808816601_0012
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 3.5 sec   HDFS Read: 8157 HDFS Write: 2 SUCCESS
+Total MapReduce CPU Time Spent: 3 seconds 500 msec
+OK
+1
+Time taken: 42.054 seconds, Fetched: 1 row(s)
+
+====================================================================================================================================
+EXTERNAL TABLE:
+----------------
+hive> create database external;
+hive> user external;
+hive> create external table if not exists ext_employee(empId int, empName varchar(100), empDesgn varchar(50), emSalary float) row format delimited fields terminated by ',' location '/user/cloudera/external';
+
+hive> insert into ext_employee values(1418,'Harsha HAreendran','VP','26000000');
+Query ID = cloudera_20230929034242_75ad8bb4-0347-41cf-a5b6-8d2f4fb7494e
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1695808816601_0014, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1695808816601_0014/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1695808816601_0014
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2023-09-29 03:43:09,161 Stage-1 map = 0%,  reduce = 0%
+2023-09-29 03:43:39,207 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.39 sec
+MapReduce Total cumulative CPU time: 4 seconds 390 msec
+Ended Job = job_1695808816601_0014
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://quickstart.cloudera:8020/user/cloudera/external/.hive-staging_hive_2023-09-29_03-42-49_519_5471139427028659600-1/-ext-10000
+Loading data to table external.ext_employee
+Table external.ext_employee stats: [numFiles=1, numRows=1, totalSize=32, rawDataSize=31]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 4.39 sec   HDFS Read: 4710 HDFS Write: 109 SUCCESS
+Total MapReduce CPU Time Spent: 4 seconds 390 msec
+OK
+Time taken: 52.58 seconds
+
+hive> insert into ext_employee values(2418,'Celia Pillai','SVP','260000000');
+Query ID = cloudera_20230929034545_371ccd95-1b6a-4c61-9887-3f44f163b0ad
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1695808816601_0015, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1695808816601_0015/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1695808816601_0015
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2023-09-29 03:45:40,461 Stage-1 map = 0%,  reduce = 0%
+2023-09-29 03:46:00,418 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.57 sec
+MapReduce Total cumulative CPU time: 4 seconds 570 msec
+Ended Job = job_1695808816601_0015
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://quickstart.cloudera:8020/user/cloudera/external/.hive-staging_hive_2023-09-29_03-45-26_205_5022988954891878805-1/-ext-10000
+Loading data to table external.ext_employee
+Table external.ext_employee stats: [numFiles=2, numRows=2, totalSize=60, rawDataSize=58]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 4.57 sec   HDFS Read: 4814 HDFS Write: 105 SUCCESS
+Total MapReduce CPU Time Spent: 4 seconds 570 msec
+OK
+Time taken: 36.897 seconds
+
+hive> insert into ext_employee values(3418,'Savita Shetty','SVP','260000000');
+Query ID = cloudera_20230929034848_b35ee27f-68a2-4fbc-829d-8b30d824676a
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1695808816601_0016, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1695808816601_0016/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1695808816601_0016
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2023-09-29 03:49:04,395 Stage-1 map = 0%,  reduce = 0%
+2023-09-29 03:49:15,517 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.84 sec
+MapReduce Total cumulative CPU time: 2 seconds 840 msec
+Ended Job = job_1695808816601_0016
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://quickstart.cloudera:8020/user/cloudera/external/.hive-staging_hive_2023-09-29_03-48-48_863_6787225095905831332-1/-ext-10000
+Loading data to table external.ext_employee
+Table external.ext_employee stats: [numFiles=3, numRows=3, totalSize=89, rawDataSize=86]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 2.84 sec   HDFS Read: 4819 HDFS Write: 106 SUCCESS
+Total MapReduce CPU Time Spent: 2 seconds 840 msec
+OK
+Time taken: 29.149 seconds
+
+**** CREATES 3 Copies in HDF after above 3 INSERTS
+
+hive> select count(*) from ext_employee;
+Query ID = cloudera_20230929035050_a3c25a08-32e2-40ab-89b1-b31385c77922
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1695808816601_0017, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1695808816601_0017/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1695808816601_0017
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2023-09-29 03:51:08,182 Stage-1 map = 0%,  reduce = 0%
+2023-09-29 03:51:18,415 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.61 sec
+2023-09-29 03:51:29,191 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 3.8 sec
+MapReduce Total cumulative CPU time: 3 seconds 800 msec
+Ended Job = job_1695808816601_0017
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 3.8 sec   HDFS Read: 8403 HDFS Write: 2 SUCCESS
+Total MapReduce CPU Time Spent: 3 seconds 800 msec
+OK
+3
+Time taken: 35.728 seconds, Fetched: 1 row(s)
+
+hive> select * from ext_employee;
+OK
+1418	Harsha HAreendran	VP	2.6E7
+2418	Celia Pillai	SVP	2.6E8
+3418	Savita Shetty	SVP	2.6E8
+Time taken: 0.089 seconds, Fetched: 3 row(s)
+
+hive> drop table ext_employee;
+OK
+Time taken: 0.189 seconds
+
+hive> select * from ext_employee;
+FAILED: SemanticException [Error 10001]: Line 1:14 Table not found 'ext_employee'
+
+hive> 
+
+
+ON HDFS: STILL THERE ON HDFS
+---------------------------------
+(base) [cloudera@quickstart ~]$ hdfs dfs -ls /user/cloudera/external
+Found 3 items
+-rwxr-xr-x   1 cloudera cloudera         32 2023-09-29 03:43 /user/cloudera/external/000000_0
+-rwxr-xr-x   1 cloudera cloudera         28 2023-09-29 03:45 /user/cloudera/external/000000_0_copy_1
+-rwxr-xr-x   1 cloudera cloudera         29 2023-09-29 03:49 /user/cloudera/external/000000_0_copy_2
+
+https://phoenixnap.com/kb/hive-create-external-table
+
+HIVE PARTITIONS : EXAMPLE
+--------------------------
+STEP 1: Create a file and load to HDFS
+
+(base) [cloudera@quickstart ~]$ vi survey.csv
+
+(base) [cloudera@quickstart ~]$ hdfs dfs -put /home/cloudera/survey.csv /user/cloudera/hiveEx/
+
+(base) [cloudera@quickstart ~]$ hdfs dfs -cat /user/cloudera/hiveEx/survey.csv
+
+STEP 2: HIVE
+
+hive> create database hive_partition;
+OK
+Time taken: 0.132 seconds
+
+hive> show databases;
+OK
+bdp
+default
+demohivespark
+external
+hive_partition
+sep
+Time taken: 0.032 seconds, Fetched: 6 row(s)
+
+hive> use hive_partition;
+
+hive> create table states_survey(state String, District String,pincode int) row format delimited fields terminated by ',';
+OK
+Time taken: 0.248 seconds
+
+hive> show tables;
+OK
+states_survey
+
+hive> LOAD DATA LOCAL inpath '/home/cloudera/survey.csv' into table states_survey;
+Loading data to table hive_partition.states_survey
+Table hive_partition.states_survey stats: [numFiles=1, totalSize=282]
+OK
+Time taken: 0.935 seconds
+
+hive> create table state_part(District string,Pincode string) PARTITIONED BY(state string);
+OK
+Time taken: 0.127 seconds
+
+hive>set hive.exec.dynamic.partition.mode=nonstrict
+
+hive> INSERT OVERWRITE TABLE state_part PARTITION(state) SELECT district,pincode,state from states_survey;
+Query ID = cloudera_20231004024444_69bead99-54e7-486a-99f0-b0bd86e6401e
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1695808816601_0018, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1695808816601_0018/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1695808816601_0018
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2023-10-04 02:45:07,620 Stage-1 map = 0%,  reduce = 0%
+2023-10-04 02:46:08,365 Stage-1 map = 0%,  reduce = 0%
+2023-10-04 02:46:11,606 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 6.57 sec
+MapReduce Total cumulative CPU time: 6 seconds 570 msec
+Ended Job = job_1695808816601_0018
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://quickstart.cloudera:8020/user/hive/warehouse/hive_partition.db/state_part/.hive-staging_hive_2023-10-04_02-44-49_485_8374719065902015270-1/-ext-10000
+Loading data to table hive_paENrtition.state_part partition (state=null)
+	 Time taken for load dynamic partitions : 1697
+	Loading partition {state=State}
+	Loading partition {state=Karnatak}
+	Loading partition {state=Andhra Pradesh}
+	Loading partition {state=Karnataka}
+	Loading partition {state=Telangana}
+	Loading partition {state=Kerala}
+	Loading partition {state=__HIVE_DEFAULT_PARTITION__}
+	Loading partition {state=Rajasthan}
+	Loading partition {state=Tamil Nadu}
+	 Time taken for adding to write entity : 9
+Partition hive_partition.state_part{state=Andhra Pradesh} stats: [numFiles=1, numRows=1, totalSize=21, rawDataSize=20]
+Partition hive_partition.state_part{state=Karnatak} stats: [numFiles=1, numRows=1, totalSize=13, rawDataSize=12]
+Partition hive_partition.state_part{state=Karnataka} stats: [numFiles=1, numRows=2, totalSize=33, rawDataSize=31]
+Partition hive_partition.state_part{state=Kerala} stats: [numFiles=1, numRows=2, totalSize=31, rawDataSize=29]
+Partition hive_partition.state_part{state=Rajasthan} stats: [numFiles=1, numRows=1, totalSize=14, rawDataSize=13]
+Partition hive_partition.state_part{state=State} stats: [numFiles=1, numRows=1, totalSize=12, rawDataSize=11]
+Partition hive_partition.state_part{state=Tamil Nadu} stats: [numFiles=1, numRows=2, totalSize=29, rawDataSize=27]
+Partition hive_partition.state_part{state=Telangana} stats: [numFiles=1, numRows=1, totalSize=17, rawDataSize=16]
+Partition hive_partition.state_part{state=__HIVE_DEFAULT_PARTITION__} stats: [numFiles=1, numRows=1, totalSize=6, rawDataSize=5]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 6.57 sec   HDFS Read: 4543 HDFS Write: 768 SUCCESS
+Total MapReduce CPU Time Spent: 6 seconds 570 msec
+OK
+Time taken: 85.85 seconds
+
+ON THE HDFS AFTER PARTITION:
+----------------------------
+(base) [cloudera@quickstart ~]$ hdfs dfs -ls /user/hive/warehouse/hive_partition.db/state_part
+Found 9 items
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 02:46 /user/hive/warehouse/hive_partition.db/state_part/state=Andhra Pradesh
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 02:46 /user/hive/warehouse/hive_partition.db/state_part/state=Karnatak
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 02:46 /user/hive/warehouse/hive_partition.db/state_part/state=Karnataka
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 02:46 /user/hive/warehouse/hive_partition.db/state_part/state=Kerala
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 02:46 /user/hive/warehouse/hive_partition.db/state_part/state=Rajasthan
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 02:46 /user/hive/warehouse/hive_partition.db/state_part/state=State
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 02:46 /user/hive/warehouse/hive_partition.db/state_part/state=Tamil Nadu
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 02:46 /user/hive/warehouse/hive_partition.db/state_part/state=Telangana
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 02:46 /user/hive/warehouse/hive_partition.db/state_part/state=__HIVE_DEFAULT_PARTITION__
+
+(base) [cloudera@quickstart ~]$ hdfs dfs -ls /user/hive/warehouse/hive_partition.db/state_part/state=Kerala
+Found 1 items
+-rwxrwxrwx   1 cloudera supergroup         31 2023-10-04 02:46 /user/hive/warehouse/hive_partition.db/state_part/state=Kerala/000000_0
+
+(base) [cloudera@quickstart ~]$ hdfs dfs -cat /user/hive/warehouse/hive_partition.db/state_part/state=Kerala/000000_0
+Kannur670694
+Kozhikode670894
+
+
+
+BUCKETING HANDSON:
+-------------------
+
+STEP 1:
+create table emp_bucket(first_name string,job_id int,department string,salary string,country string) clustered by (country) into 4 buckets row format delimited fields terminated by ',';
+
+STEP 2:
+
+create table employees(first_name string,job_id int,department string,salary string,country string);
+
+insert into employees values('Harsha HAreendran',8418,'WM','260000','AUS');
+insert into employees values('Saumya Damodaran',8415,'TECH','260000','AUS');
+insert into employees values('Alaika Renjith',8410,'TECH','260000','AUS');
+insert into employees values('Savita Shetty',8428,'FIN','260000','IRE');
+insert into employees values('Pooja Nagraj',6428,'FIN','260000','IRE');
+insert into employees values('Spoorthi Myneni',5428,'FIN','260000','IRE');
+insert into employees values('Suba Shekar',5428,'WRIT','260000','IRE');
+insert into employees values('Sorooba Shekar',2428,'MGR','260000','IRE');
+insert into employees values('Celia Pillai',8438,'DESGN','260000','USA');
+insert into employees values('Shymailee Shashidharan',9438,'PHY','260000','USA');
+insert into employees values('Harsha HAreendran',8418,'WM','260000','UK');
+insert into employees values('Saumya Damodaran',8415,'TECH','260000','UK');
+insert into employees values('Alaika Renjith',8410,'TECH','260000','UK');
+insert into employees values('Sabin Damodaran',8418,'WM','260000','UAE');
+insert into employees values('Saumya Renjith',8415,'TECH','260000','UAE');
+insert into employees values('Samna Majeesh ',8410,'LEAR','260000','UAE');
+
+STEP 3:
+hive>set hive.enforce.bucketing=true;
+
+hive> from employees insert overwrite table emp_bucket select first_name,job_id,department,salary,country;
+Query ID = cloudera_20231004032929_1a7d8f9d-7604-4782-bf85-ccff89f07739
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1695808816601_0025, Tracking URL = http://quickstart.cloudera:8088/proxy/application_1695808816601_0025/
+Kill Command = /usr/lib/hadoop/bin/hadoop job  -kill job_1695808816601_0025
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2023-10-04 03:30:07,643 Stage-1 map = 0%,  reduce = 0%
+2023-10-04 03:31:03,305 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.93 sec
+MapReduce Total cumulative CPU time: 5 seconds 350 msec
+Ended Job = job_1695808816601_0025
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to: hdfs://quickstart.cloudera:8020/user/hive/warehouse/hive_partition.db/samplebucket/.hive-staging_hive_2023-10-04_03-29-52_891_3476948698241296336-1/-ext-10000	
+Loading data to table hive_partition.samplebucket
+Table hive_partition.samplebucket stats: [numFiles=1, numRows=6, totalSize=223, rawDataSize=217]
+MapReduce Jobs Launched: 
+Stage-Stage-1: Map: 1   Cumulative CPU: 5.35 sec   HDFS Read: 5052 HDFS Write: 307 SUCCESS
+Total MapReduce CPU Time Spent: 5 seconds 350 msec
+OK
+Time taken: 73.076 seconds
+
+ON HDFS AFTER BUCKETING:
+-------------------------
+
+(base) [cloudera@quickstart ~]$ hdfs dfs -ls /user/hive/warehouse/hive_partition.db
+Found 4 items
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 03:28 /user/hive/warehouse/hive_partition.db/employees
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 03:31 /user/hive/warehouse/hive_partition.db/emp_bucket
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 02:46 /user/hive/warehouse/hive_partition.db/state_part
+drwxrwxrwx   - cloudera supergroup          0 2023-10-04 02:37 /user/hive/warehouse/hive_partition.db/states_survey
+
+base) [cloudera@quickstart ~]$ hdfs dfs -ls /user/hive/warehouse/hive_partition.db/emp_bucket
+Found 4 items
+-rwxrwxrwx   1 cloudera supergroup         34 2023-10-04 04:08 /user/hive/warehouse/hive_partition.db/emp_bucket/000000_0
+-rwxrwxrwx   1 cloudera supergroup          0 2023-10-04 04:07 /user/hive/warehouse/hive_partition.db/emp_bucket/000001_0
+-rwxrwxrwx   1 cloudera supergroup        108 2023-10-04 04:08 /user/hive/warehouse/hive_partition.db/emp_bucket/000002_0
+-rwxrwxrwx   1 cloudera supergroup        264 2023-10-04 04:08 /user/hive/warehouse/hive_partition.db/emp_bucket/000003_0
+
+(base) [cloudera@quickstart ~]$ hdfs dfs -ls /user/hive/warehouse/hive_partition.db/emp_bucket/000000_0
+-rwxrwxrwx   1 cloudera supergroup         34 2023-10-04 04:08 /user/hive/warehouse/hive_partition.db/emp_bucket/000000_0
+
+(base) [cloudera@quickstart ~]$ hdfs dfs -cat /user/hive/warehouse/hive_partition.db/emp_bucket/000000_0
+Savita Shetty,8428,FIN,260000,IRE
+
+(base) [cloudera@quickstart ~]$ hdfs dfs -cat /user/hive/warehouse/hive_partition.db/emp_bucket/000001_0
+
+(base) [cloudera@quickstart ~]$ hdfs dfs -cat /user/hive/warehouse/hive_partition.db/emp_bucket/000002_0
+Saumya Damodaran,8415,TECH,260000,UK
+Harsha HAreendran,8418,WM,260000,UK
+Alaika Renjith,8410,TECH,260000,UK
+
+(base) [cloudera@quickstart ~]$ hdfs dfs -cat /user/hive/warehouse/hive_partition.db/emp_bucket/000003_0
+Saumya Damodaran,8415,TECH,260000,AUS
+Harsha HAreendran,8418,WM,260000,AUS
+Shymailee Shashidharan,9438,PHY,260000,USA
+Celia Pillai,8438,DESGN,260000,USA
+Alaika Renjith,8410,TECH,260000,AUS
+Saumya Damodaran,8415,TECH,260000,AUS
+Harsha HAreendran,8418,WM,260000,AUS
+
+--------------------------------------------
+
+hive> show create table employee;
+FAILED: SemanticException [Error 10001]: Table not found employee
+hive> show create table employees;
+OK
+CREATE TABLE `employees`(
+  `first_name` string, 
+  `job_id` int, 
+  `department` string, 
+  `salary` string, 
+  `country` string)
+ROW FORMAT SERDE 
+  'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe' 
+STORED AS INPUTFORMAT 
+  'org.apache.hadoop.mapred.TextInputFormat' 
+OUTPUTFORMAT 
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+  'hdfs://quickstart.cloudera:8020/user/hive/warehouse/hive_partition.db/employees'
+TBLPROPERTIES (
+  'COLUMN_STATS_ACCURATE'='true', 
+  'numFiles'='11', 
+  'numRows'='11', 
+  'rawDataSize'='395', 
+  'totalSize'='406', 
+  'transient_lastDdlTime'='1696416641')
+Time taken: 0.198 seconds, Fetched: 21 row(s)
+
+
+SERDES?: Triggered row format delimited fields terminated by ',';

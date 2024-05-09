@@ -1,0 +1,311 @@
+(base) [cloudera@quickstart ~]$ hbase shel
+Java HotSpot(TM) 64-Bit Server VM warning: Using incremental CMS is deprecated and will likely be removed in a future release
+Error: Could not find or load main class shel
+(base) [cloudera@quickstart ~]$ hbase shell
+Java HotSpot(TM) 64-Bit Server VM warning: Using incremental CMS is deprecated and will likely be removed in a future release
+23/10/06 02:11:36 INFO Configuration.deprecation: hadoop.native.lib is deprecated. Instead, use io.native.lib.available
+HBase Shell; enter 'help<RETURN>' for list of supported commands.
+Type "exit<RETURN>" to leave the HBase Shell
+Version 1.2.0-cdh5.13.0, rUnknown, Wed Oct  4 11:16:18 PDT 2017
+
+hbase(main):001:0> list
+TABLE                                                                                                                                                                   
+0 row(s) in 0.8400 seconds
+
+=> []
+hbase(main):002:0> status
+1 active master, 0 backup masters, 1 servers, 0 dead, 2.0000 average load
+
+hbase(main):003:0> whoami
+cloudera (auth:SIMPLE)
+    groups: cloudera, default
+
+hbase(main):001:0> table_help
+Help for table-reference commands.
+
+You can either create a table via 'create' and then manipulate the table via commands like 'put', 'get', etc.
+See the standard help information for how to use each of these commands.
+
+However, as of 0.96, you can also get a reference to a table, on which you can invoke commands.
+For instance, you can get create a table and keep around a reference to it via:
+
+   hbase> t = create 't', 'cf'
+
+Or, if you have already created the table, you can get a reference to it:
+
+   hbase> t = get_table 't'
+
+You can do things like call 'put' on the table:
+
+  hbase> t.put 'r', 'cf:q', 'v'
+
+which puts a row 'r' with column family 'cf', qualifier 'q' and value 'v' into table t.
+
+To read the data out, you can scan the table:
+
+  hbase> t.scan
+
+which will read all the rows in table 't'.
+
+Essentially, any command that takes a table name can also be done via table reference.
+Other commands include things like: get, delete, deleteall,
+get_all_columns, get_counter, count, incr. These functions, along with
+the standard JRuby object methods are also available via tab completion.
+
+For more information on how to use each of these commands, you can also just type:
+
+   hbase> t.help 'scan'
+
+which will output more information on how to use that command.
+
+You can also do general admin actions directly on a table; things like enable, disable,
+flush and drop just by typing:
+
+   hbase> t.enable
+   hbase> t.flush
+   hbase> t.disable
+   hbase> t.drop
+
+Note that after dropping a table, your reference to it becomes useless and further usage
+is undefined (and not recommended).
+
+
+CREATE TABLE
+-------------
+hbase(main):002:0> create 'employee','personal_info','professional_info','financial_info';
+hbase(main):003:0* list
+0 row(s) in 1.8370 seconds
+
+TABLE                                                                                                                                                                   
+employee                                                                                                                                                                
+1 row(s) in 0.0230 seconds
+
+=> ["employee"]
+hbase(main):004:0> 
+
+DESCRIBE
+---------
+hbase(main):014:0> describe 'employee'
+Table employee is ENABLED                                                                                                                                               
+employee                                                                                                                                                                
+COLUMN FAMILIES DESCRIPTION                                                                                                                                             
+{NAME => 'financial_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 'NO
+NE', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                       
+{NAME => 'personal_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 'NON
+E', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                        
+{NAME => 'professional_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 
+'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                    
+3 row(s) in 0.3280 seconds
+
+DISABLE TABLE: [Describe not displayed]
+--------------
+hbase(main):015:0> disable 'employee';
+hbase(main):016:0* list
+0 row(s) in 2.3960 seconds
+
+TABLE                                                                                                                                                                   
+employee                                                                                                                                                                
+1 row(s) in 0.0090 seconds
+
+=> ["employee"]
+hbase(main):017:0> describe 'employee';
+hbase(main):018:0* 
+
+ENABLE TABLE again:
+-------------------
+hbase(main):019:0> enable 'employee'
+0 row(s) in 1.3700 seconds
+
+hbase(main):020:0> list
+TABLE                                                                                                                                                                   
+employee                                                                                                                                                                
+1 row(s) in 0.0150 seconds
+
+=> ["employee"]
+hbase(main):021:0> describe 'employee'
+Table employee is ENABLED                                                                                                                                               
+employee                                                                                                                                                                
+COLUMN FAMILIES DESCRIPTION                                                                                                                                             
+{NAME => 'financial_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 'NO
+NE', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                       
+{NAME => 'personal_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 'NON
+E', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                        
+{NAME => 'professional_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 
+'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                    
+3 row(s) in 0.1340 seconds
+
+DROP TABLE: [Disable first before drop]
+-------------
+
+hbase(main):022:0> drop 'employee'
+
+ERROR: Table employee is enabled. Disable it first.
+
+Drop the named table. Table must first be disabled:
+  hbase> drop 't1'
+  hbase> drop 'ns1:t1'
+
+
+hbase(main):023:0> disable 'employee'
+0 row(s) in 2.2720 seconds
+
+hbase(main):024:0> drop 'employee'
+0 row(s) in 1.3700 seconds
+
+hbase(main):025:0> 
+
+hbase(main):025:0> list
+TABLE                                                                                                                                                                   
+0 row(s) in 0.0190 seconds
+
+=> []
+hbase(main):026:0> describe 'employee'
+
+ERROR: Unknown table employee!
+
+Describe the named table. For example:
+  hbase> describe 't1'
+  hbase> describe 'ns1:t1'
+
+Alternatively, you can use the abbreviated 'desc' for the same thing.
+  hbase> desc 't1'
+  hbase> desc 'ns1:t1'
+
+RECREATE:
+---------
+
+hbase(main):027:0> create 'employee','personal_info','professional_info','financial_info';
+hbase(main):028:0* list
+0 row(s) in 1.2820 seconds
+
+TABLE                                                                                                                                                                   
+employee                                                                                                                                                                
+1 row(s) in 0.0130 seconds
+
+=> ["employee"]
+hbase(main):029:0> describe 'employee'
+Table employee is ENABLED                                                                                                                                               
+employee                                                                                                                                                                
+COLUMN FAMILIES DESCRIPTION                                                                                                                                             
+{NAME => 'financial_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 'NO
+NE', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                       
+{NAME => 'personal_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 'NON
+E', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                        
+{NAME => 'professional_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 
+'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                    
+3 row(s) in 0.0860 seconds
+
+
+INSERT:
+----------
+hbase(main):001:0> list
+TABLE                                                                                                                                                                   
+employee                                                                                                                                                                
+1 row(s) in 0.3430 seconds
+
+=> ["employee"]
+hbase(main):002:0> put 'employee',1,'professional_info:fname','Harsha'
+0 row(s) in 0.3340 seconds
+
+hbase(main):003:0> list
+TABLE                                                                                                                                                                   
+employee                                                                                                                                                                
+1 row(s) in 0.0040 seconds
+
+=> ["employee"]
+hbase(main):004:0> describe 'employee'
+Table employee is ENABLED                                                                                                                                               
+employee                                                                                                                                                                
+COLUMN FAMILIES DESCRIPTION                                                                                                                                             
+{NAME => 'financial_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 'NO
+NE', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                       
+{NAME => 'personal_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 'NON
+E', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                        
+{NAME => 'professional_info', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', COMPRESSION => 
+'NONE', TTL => 'FOREVER', MIN_VERSIONS => '0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                                    
+3 row(s) in 0.1330 seconds
+
+hbase(main):005:0> scan 'employee'
+ROW                                         COLUMN+CELL                                                                                                                 
+ 1                                          column=professional_info:fname, timestamp=1696587417161, value=Harsha                                                       
+1 row(s) in 0.0650 seconds
+
+REPEAT LAST INSERT: [same row key, it updates]
+-----------------------------------------------
+hbase(main):007:0> put 'employee',1,'professional_info:fname','Harsha H'
+0 row(s) in 0.0230 seconds
+
+hbase(main):008:0> scan 'employee'
+ROW                                         COLUMN+CELL                                                                                                                 
+ 1                                          column=professional_info:fname, timestamp=1696587558426, value=Harsha H                                                     
+1 row(s) in 0.0220 seconds
+
+REPEAT LAST INSERT: [same row key, it updates]
+----------------------------------------------
+hbase(main):009:0> put 'employee',2,'professional_info:fname','Harsha Hareendran'
+0 row(s) in 0.0290 seconds
+
+hbase(main):010:0> scan 'employee'
+ROW                                         COLUMN+CELL                                                                                                                 
+ 1                                          column=professional_info:fname, timestamp=1696587558426, value=Harsha H                                                     
+ 2                                          column=professional_info:fname, timestamp=1696587652673, value=Harsha Hareendran                                            
+2 row(s) in 0.0180 seconds
+
+INSERT [New column Family]
+--------------------------
+hbase(main):011:0> put 'employee',1,'personal_info:age','36'
+0 row(s) in 0.0430 seconds
+
+hbase(main):012:0> scan 'employee'
+ROW                                         COLUMN+CELL                                                                                                                 
+ 1                                          column=personal_info:age, timestamp=1696587807110, value=36                                                                 
+ 1                                          column=professional_info:fname, timestamp=1696587558426, value=Harsha H                                                     
+ 2                                          column=professional_info:fname, timestamp=1696587652673, value=Harsha Hareendran                                            
+2 row(s) in 0.0510 seconds
+
+INSERT [MULTIPLE COLUMNS]:
+----------------------------
+hbase(main):017:0> put 'employee', 3,'personal_info:name,marital','harsha,married'
+0 row(s) in 0.0410 seconds
+
+hbase(main):018:0> scan 'employee'
+ROW                                         COLUMN+CELL                                                                                                                 
+ 1                                          column=personal_info:age, timestamp=1696587807110, value=36                                                             
+ 1                                          column=professional_info:fname, timestamp=1696587558426, value=Harsha H                                                  
+ 2                                          column=professional_info:fname, timestamp=1696587652673, value=Harsha Hareendran                                         
+ 3                                          column=personal_info:name,marital, timestamp=1696594013384, value=harsha,married                                         
+3 row(s) in 0.0400 seconds
+
+GET [BASED ON ROW KEY]:
+-------------------------
+hbase(main):020:0> get 'employee', 1
+COLUMN                                      CELL                                                                                                                        
+ personal_info:age                          timestamp=1696587807110, value=36                                                                                           
+ professional_info:fname                    timestamp=1696587558426, value=Harsha H                                                                                     
+2 row(s) in 0.1300 seconds
+
+
+ERROR: MULTIPLE COLUMN ATTEMPT:
+---------------------------------
+hbase(main):006:0> put 'employee',1,'professional_info:fname','Harsha','professional_info:lname','Hareendran'
+
+ERROR: no method 'add' for arguments (org.jruby.java.proxies.ArrayJavaProxy,org.jruby.java.proxies.ArrayJavaProxy,org.jruby.RubyString,org.jruby.java.proxies.ArrayJavaProxy) on Java::OrgApacheHadoopHbaseClient::Put
+  available overloads:
+    (byte[],byte[],long,byte[])
+    (byte[],java.nio.ByteBuffer,long,java.nio.ByteBuffer)
+
+Put a cell 'value' at specified table/row/column and optionally
+timestamp coordinates.  To put a cell value into table 'ns1:t1' or 't1'
+at row 'r1' under column 'c1' marked with the time 'ts1', do:
+
+  hbase> put 'ns1:t1', 'r1', 'c1', 'value'
+  hbase> put 't1', 'r1', 'c1', 'value'
+  hbase> put 't1', 'r1', 'c1', 'value', ts1
+  hbase> put 't1', 'r1', 'c1', 'value', {ATTRIBUTES=>{'mykey'=>'myvalue'}}
+  hbase> put 't1', 'r1', 'c1', 'value', ts1, {ATTRIBUTES=>{'mykey'=>'myvalue'}}
+  hbase> put 't1', 'r1', 'c1', 'value', ts1, {VISIBILITY=>'PRIVATE|SECRET'}
+
+The same commands also can be run on a table reference. Suppose you had a reference
+t to table 't1', the corresponding command would be:
+
+  hbase> t.put 'r1', 'c1', 'value', ts1, {ATTRIBUTES=>{'mykey'=>'myvalue'}}

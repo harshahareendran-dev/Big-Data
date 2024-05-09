@@ -1,0 +1,24 @@
+
+Assignment Day 6
+
+Task 1 ( 30 Minutes)
+Create a new outlook email and sigh up for Tableau cloud , start your trial. - DONE
+Open Tableau Desktop and sign in with your tableau account. - DONE
+Connect data from Global superstore 2016(orders and people table). - DONE
+Create a Hierarchy for Category,subcategory and productname. - DONE
+Create a bin for profit.- DONE
+Create a combined field for State and city - DONE
+Publish this data source to Tableau Cloud. - DONE
+Open a new Tableau workbook and get data from Tableau cloud, you should get your join, Hierarchy,bin an combined field. - DONE
+Close this new workbook, no save needed, go back to previous workbook. - DONE
+Create a new sheet , use Category Hierarchy and segment to create crosstab for sales. - DONE
+Publish this sheet to Tableau public. - DONE
+Save this workbook as published.twbx - DONE
+
+Task 2 : 20 Minutes
+Keep working with published.twbx, ensure it should be connected with Tableau cloud
+Add a dashboard to the workbook, include a central filter to the dashboards and publish it to the cloud.
+You have published the data source to cloud, use Ask Data in the dashboard and explore its features.
+Design a Data story and present the report using it.
+
+
